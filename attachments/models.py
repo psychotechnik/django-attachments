@@ -1,12 +1,16 @@
 from datetime import datetime
 import os
+
+from model_utils.managers import InheritanceManager
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
 
-class AttachmentManager(models.Manager):
+
+class AttachmentManager(InheritanceManager):
     def attachments_for_object(self, obj):
         object_type = ContentType.objects.get_for_model(obj)
         return self.filter(content_type__pk=object_type.id,
